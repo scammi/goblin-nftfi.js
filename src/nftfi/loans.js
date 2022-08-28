@@ -92,7 +92,7 @@ class Loans {
    */
   async begin(options) {
     let success = false;
-    switch (options.offer.nftfi.contract.name) {
+    switch (options.nftfi.contract.name) {
       case 'v2.loan.fixed':
         success = await this.#fixed.v2.acceptOffer(options);
         break;

@@ -20,6 +20,7 @@ import MultisigGnosis from './nftfi/account/multisig/gnosis.js';
 import MultisigGnosisOwner from './nftfi/account/multisig/gnosis/owner.js';
 import ContractFactory from './nftfi/contract/factory.js';
 import Contract from './nftfi/contract.js';
+import Goblin from './nftfi/goblin.js'
 import NFTfi from './nftfi/index.js';
 
 import { SafeEthersSigner, SafeService } from '@gnosis.pm/safe-ethers-adapters';
@@ -48,14 +49,15 @@ export default {
     const hasProviderUrl = options?.ethereum?.provider?.url;
 
     if (!hasWeb3Provider && !hasProviderUrl) {
+      console.log(hasWeb3Provider, options.ethereum);
       throw 'Please provide a value for the ethereum.provider.url field in the options parameter.';
     }
     if (!hasWeb3Provider && !hasGnosisSafePks && !hasAccountPk) {
       throw 'Please provide a value for the ethereum.account.privateKey field in the options parameter.';
     }
-    if (!hasApiKey) {
-      throw 'Please provide a value for the api.key field in the options parameter.';
-    }
+    // if (!hasApiKey) {
+    //   throw 'Please provide a value for the api.key field in the options parameter.';
+    // }
     if (!hasGnosisSafeAddress && !hasAccountPk && !hasAccountAddress) {
       throw 'Please provide a value for the ethereum.account.address field in the options parameter.';
     }
@@ -76,7 +78,8 @@ export default {
       merge,
       chainId: network?.chainId,
       config: {
-        ...options.config
+        ...options.config,
+        ...options.ethereum,
       }
     });
 
@@ -143,7 +146,8 @@ export default {
     const loans = new Loans({ api, account, fixed: loanFixed });
     const erc20 = new Erc20({ config, account, contractFactory, BN });
     const erc721 = new Erc721({ config, contractFactory });
-    const nftfi = new NFTfi({ config, account, listings, offers, loans, erc20, erc721, utils });
+    const goblin = new Goblin({ config, account, erc721, loans, provider });
+    const nftfi = new NFTfi({ config, account, listings, offers, loans, erc20, erc721, utils, goblin });
 
     if (options?.logging?.verbose === true) {
       console.log('NFTfi SDK initialised.');
