@@ -52,6 +52,12 @@ class Goblin {
     this.#provider = options?.provider;
   }
 
+    /**
+   * Gets goblins terms for users NFTs filtered by allow listed.
+   *
+   * @returns {Array<object>} Array of offers 
+   *
+   */
   async getLoanOffers() {
     const goblinAllowListedNFTs = await _getGoblinAllowListedNFTs();
     const userNFTs = await _getUserNfts(this.#config, this.#account.getAddress(),);
@@ -80,6 +86,14 @@ class Goblin {
     return allPossibleTerms;
   }
 
+    /**
+   * Begin loan with goblin.
+   *  1. fetches offer terms 
+   *  2. inits loan
+   *
+   * @param {object} offer
+   *
+   */
   async beginLoan(offer) {
     // Fetch the goblin sax offer: 
     const offerRequestUrl = new URL('api/create-offer', this.baseGoblinUrl);
@@ -131,6 +145,10 @@ class Goblin {
     */
   }
 
+    /**
+   *  Gets tracks and pays open user loans.
+   *   
+   */
   async trackAndResolveLoans(blockRepayThreshold = 50) {
     // get on going loans
     const openLoans = await this.getOnGoingLoans();
