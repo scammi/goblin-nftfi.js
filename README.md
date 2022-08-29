@@ -28,12 +28,12 @@ It exposes a new class `goblin` that can be use to fetch goblin specific offers,
   const loanOffer = loanOffers[0];
 
   const offer = {
-    address: loanOffers.tokenAddress,
-    id: loanOffers.tokenId,
+    address: loanOffer.tokenAddress,
+    id: loanOffer.tokenId,
     duration: Object.keys(loanOffer.offers)[0],
     borrowerAddress: process.env.USER_ADDRESS,
-    principal: ethers.utils.formatUnits(loanOffer.maxLoan, 'wei'), //'55000000000000000' maxLoan
-    apr: '10',  // loan.offers[0].apr
+    principal: ethers.utils.formatUnits(loanOffer.maxLoan, 'wei'), //'55000000000000000'
+    apr: loanOffer.offers[0].apr
     referralAddress: '0x0000000000000000000000000000000000000000',
   }
 
