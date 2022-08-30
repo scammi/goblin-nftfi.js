@@ -5,7 +5,7 @@ import { expect } from 'chai';
 dotenv.config();
 
 let nftfi;
-describe('Goblin sax SDK', () => {
+describe('Goblin Sax SDK', () => {
   beforeEach(async () => {
     nftfi = await NFTfi.init({
       config: {
@@ -26,16 +26,17 @@ describe('Goblin sax SDK', () => {
     });
   });
 
-  it.only('Gets goblin sax loans ', async () => {
+  it ('Gets Goblin Sax loans ', async () => {
     const loanOffers = await nftfi.goblin.getLoanOffers();
 
-    console.log(loanOffers[0].body.offers['7']);
+    console.log('Offers: ',loanOffers[0].body.offers['7']);
 
     expect(loanOffers).to.not.be.empty;
+    expect(loanOffers).to.haveOwnProperty('0');
     expect(loanOffers[0]).to.have.property('success', true);
   });
 
-  it('Beging goblin loan', async () => {
+  it('Beging Goblin loan', async () => {
     // offer object can be constructed from the getLoanOffers method. 
     const offer = {
       address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d',
