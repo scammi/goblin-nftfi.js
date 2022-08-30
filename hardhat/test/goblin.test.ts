@@ -9,6 +9,7 @@ describe('Goblin Sax SDK', () => {
   beforeEach(async () => {
     nftfi = await NFTfi.init({
       config: {
+        api: { key: process.env.NFTFI_SDK_API_KEY },
         alchemy: {
           rinkeby: { key: process.env.ALCHEMY_RINKEBY_KEY }
         }
@@ -49,5 +50,10 @@ describe('Goblin Sax SDK', () => {
     };
 
     expect(await nftfi.goblin.beginLoan(offer)).not.to.throw;
+  });
+
+  it ('Gets on going open loans for user', async () => {
+    const openLoans = await nftfi.goblin.getOnGoingLoans();
+    // console.log(openLoans);
   });
 });
